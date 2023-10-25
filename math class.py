@@ -43,7 +43,7 @@ class Math:
         'Uses an if statement to check if num2 is zero'
         'If true, it will print cannot be divided by zero'
         if (self.num2 == 0): 
-            print("Cannot divide by zero")
+            return "Cannot divide by zero"
         else:
             return self.num1 / self.num2
         
