@@ -4,25 +4,43 @@ phases:
   install:
     runtime-versions:
       python: 3.8
-    commands:
-      - echo Installing dependencies...
-      - pip install -r requirements.txt
-
   pre_build:
     commands:
-      - echo Pre-build phase...
-
+      - apt-get install -y python3-venv
+      - python3.6 -m venv test_venv
+      - . test_venv/bin/activate
+      - pip install --upgrade pip
+      - pip install .
+      - pip install -r tests/requirements.txt
+      - rm -rf dspt
+      - mkdir test-reports
   build:
     commands:
-      - echo Build started on `date`
-      - echo Building the Python application...
-      - python setup.py install
-
+      - pytest 
+        --html=test-reports/report.html 
+        --self-contained-html
+        -s
+        -v
+        --cov=dspt 
+        --cov-report=html:test-reports/coverage 
+        --junitxml=test-reports/junit.xml 
+        --log-file=test-reports/logs.txt 
+        tests
   post_build:
     commands:
       - echo Build completed on `date`
 
-artifacts:
-  files:
-    - '**/*'
-  discard-paths: yes
+reports:
+  coverage:
+    files:
+      - "coverage/*"
+    base-directory: 'test-reports'
+    discard-paths: yes
+  report:
+    files:
+      - 'junit.xml'
+      - 'report.html'
+      - 'assets/*'
+    base-directory: 'test-reports'
+    discard-paths: yes
+    file-format: JunitXml
