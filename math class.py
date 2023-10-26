@@ -1,9 +1,9 @@
 
 'Creates two variables called num1 and num2 and asks the user for integer inputs'
 
-num1 = 1
+num1 = int(input("Please enter a number: "))
 
-num2 = 2
+num2 = int(input("Please enter a second number: "))
 
  
 
