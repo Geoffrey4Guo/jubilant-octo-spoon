@@ -1,9 +1,3 @@
-The problem occurs because you set the variable as INPUT_STORE in your workflow and extract as INPUT_MYINPUT in your python script. Use the same variable and it should work.
-
-I made it work like this:
-
-Workflow file:
-
 name: Test Python Input
 
 on:
